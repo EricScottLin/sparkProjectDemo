@@ -13,7 +13,7 @@
 <div id="main" style="width:1000px;height: 800px;"></div>
 </body>
 <script th:inline="javascript">
-    $ (function () {
+    $(function () {
         // 在ID为main的标签中初始化ECharts实例
         var myChart = echarts.init(document.getElementById('main'));
         // 获取Model对象传递到HTML的热门品类Top10数据
@@ -52,7 +52,7 @@
             "cart_count",
             "purchase_count"]);
         // 遍历热门品类Top10数据，将第一条数据以数组的形式插入数组top10_options
-        $.each(top10,function (index, value) {
+        $.each(top10, function (index, value) {
             top10_options.push([value.category_id,
                 parseInt(value.view_count),
                 parseInt(value.cart_count),

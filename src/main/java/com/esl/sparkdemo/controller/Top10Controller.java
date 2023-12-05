@@ -6,8 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.annotation.Resource;
-
 @Controller
 public class Top10Controller {
     // Autowired注解用于声明类的属性，属性类型为接口类型
@@ -16,8 +14,8 @@ public class Top10Controller {
 
     // RequestMapping注解用于处理URL请求，将URL请求映射到方法中
     @RequestMapping("top10")
-    public String top10(Model model){
-        model.addAttribute("top10",top10Mapper.getTop10());
+    public String top10(Model model) {
+        model.addAttribute("top10", top10Mapper.getTop10());
         return "top10";
     }
 }
