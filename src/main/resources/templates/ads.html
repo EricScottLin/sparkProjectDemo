@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>广告流</title>
+    <!--Jquery-->
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="http://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>
+</head>
+<body>
+<h1>广告流点击实时统计</h1>
+<!--定义ID为main的div标签作为存放ECharts柱状图的容器-->
+<div id="main" style="width:1000px;height: 800px;"></div>
+</body>
+<script>
+    $(document).ready(function () {
+        var data_arr = []
+        // 在id为main的标签里初始化Echarts实例
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+
+        // 指定图表的配置项和数据
+        var option = {
+            title: {
+                text: '广告流点击实时统计'
+            },
+            tooltip: {},
+            legend: {},
+            dataset: {
+                dimensions: ['ad', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
+                source: []
+            },
+            xAxis: {
+                type: 'category'
+            },
+            yAxis: {},
+            series: [
+                {type: 'bar'},
+                {type: 'bar'},
+                {type: 'bar'},
+                {type: 'bar'},
+                {type: 'bar'},
+                {type: 'bar'},
+                {type: 'bar'},
+                {type: 'bar'},
+                {type: 'bar'},
+                {type: 'bar'},
+                {type: 'bar'}
+            ]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+
+        function getData() {
+            $.ajax({
+                // 定义HTTP请求方式为POST
+                type: 'POST',
+                // 定义HTTP请求地址为/adsData
+                url: '/adsData',
+                // 定义数据类型为JSON
+                dataType: 'json',
+                // 定义请求成功时的处理函数
+                success: function (data) {
+                    // 显示ECharts柱状图模板的加载提示
+                    myChart.showLoading();
+                    // 遍历广告点击流实时统计数据data
+                    $.each(data, function (index, value) {
+                        var json = {};
+                        var city = value.area;
+                        var ad_count = parseInt(value.count);
+                        var ad_id = value.ad;
+                        json["ad"] = city;
+                        json[ad_id] = ad_count;
+                        data_arr.push(json);
+                    });
+                    // 隐藏ECharts柱状图模版的加载提示
+                    myChart.hideLoading();
+                    // 指定ECharts柱状图模板的数据为数组data_arr
+                    myChart.setOption({
+                        dataset: {source: data_arr}
+                    });
+                },
+                // 定义请求失败时的处理函数
+                error: function (e) {
+                    console.log(e)
+                }
+            });
+        }
+
+        setInterval(getData, 5000)
+    })
+</script>
+</html>

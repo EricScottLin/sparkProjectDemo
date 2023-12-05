@@ -25,7 +25,7 @@ public class AdsController {
     }
 
     @RequestMapping(value = "/ads", produces = "text/html;charset=utf-8")
-    public String ads() {
+    public String ads() {myChart
         return "ads";
     }
 }
