@@ -12,5 +12,4 @@ public interface AdsMapper {
     // Select注解用于指定查询操作的SQL语句
     @Select("select 'area', 'count', 'ad' from 'adstream'")
     List<Ads> ads();
-
 }

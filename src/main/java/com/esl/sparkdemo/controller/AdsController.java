@@ -20,12 +20,11 @@ public class AdsController {
     @RequestMapping(value = "/adsData", method = RequestMethod.POST)
     @ResponseBody
     public List<Ads> adsData() {
-        List<Ads> ads = adsMapper.ads();
-        return ads;
+        return adsMapper.ads();
     }
 
     @RequestMapping(value = "/ads", produces = "text/html;charset=utf-8")
-    public String ads() {myChart
+    public String ads() {
         return "ads";
     }
 }
